@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Monolog\DateTimeImmutable;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -47,10 +49,16 @@ class User implements UserInterface
      */
     private ?string $lastname;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Figure::class, mappedBy="author")
+     */
+    private $figures;
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->figures = new ArrayCollection();
     }
 
     public function getEmail(): ?string
@@ -161,6 +169,36 @@ class User implements UserInterface
     public function setLastname(?string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Figure[]
+     */
+    public function getFigures(): Collection
+    {
+        return $this->figures;
+    }
+
+    public function addFigure(Figure $figure): self
+    {
+        if (!$this->figures->contains($figure)) {
+            $this->figures[] = $figure;
+            $figure->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFigure(Figure $figure): self
+    {
+        if ($this->figures->removeElement($figure)) {
+            // set the owning side to null (unless already changed)
+            if ($figure->getAuthor() === $this) {
+                $figure->setAuthor(null);
+            }
+        }
 
         return $this;
     }
