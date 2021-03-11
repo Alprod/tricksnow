@@ -42,10 +42,16 @@ class Figure
      */
     private $groupFigure;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures")
+     */
+    private Collection $images;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->discussions = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getTitle(): ?string
@@ -122,6 +128,36 @@ class Figure
     public function setGroupFigure(?GroupFigure $groupFigure): self
     {
         $this->groupFigure = $groupFigure;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setFigures($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getFigures() === $this) {
+                $image->setFigures(null);
+            }
+        }
 
         return $this;
     }
