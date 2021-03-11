@@ -37,6 +37,11 @@ class Figure
      */
     private Collection $discussions;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=GroupFigure::class, inversedBy="figures")
+     */
+    private $groupFigure;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -105,6 +110,18 @@ class Figure
                 $discussion->setArticles(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGroupFigure(): ?GroupFigure
+    {
+        return $this->groupFigure;
+    }
+
+    public function setGroupFigure(?GroupFigure $groupFigure): self
+    {
+        $this->groupFigure = $groupFigure;
 
         return $this;
     }
