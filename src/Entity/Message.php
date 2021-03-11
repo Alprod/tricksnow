@@ -3,38 +3,40 @@
 namespace App\Entity;
 
 use App\Repository\MessageRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Monolog\DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass=MessageRepository::class)
  */
 class Message
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use ResourceId;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text")
      */
-    private $contenu;
+    private ?string $contenu;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private DateTimeInterface $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      */
-    private $authorMsg;
+    private ?User $authorMsg;
 
-    public function getId(): ?int
+    /**
+     * @ORM\ManyToOne(targetEntity=Discussion::class, inversedBy="messages")
+     */
+    private ?Discussion $discussion;
+
+    public function __construct()
     {
-        return $this->id;
+        $this->created_at = new \DateTimeImmutable();
     }
 
     public function getContenu(): ?string
@@ -49,16 +51,9 @@ class Message
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $created_at): self
-    {
-        $this->created_at = $created_at;
-
-        return $this;
     }
 
     public function getAuthorMsg(): ?User
@@ -69,6 +64,18 @@ class Message
     public function setAuthorMsg(?User $authorMsg): self
     {
         $this->authorMsg = $authorMsg;
+
+        return $this;
+    }
+
+    public function getDiscussion(): ?Discussion
+    {
+        return $this->discussion;
+    }
+
+    public function setDiscussion(?Discussion $discussion): self
+    {
+        $this->discussion = $discussion;
 
         return $this;
     }
