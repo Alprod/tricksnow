@@ -28,7 +28,7 @@ class Figure
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="figures")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $author;
+    private ?User $author;
 
     public function __construct()
     {
