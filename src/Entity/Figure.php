@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FigureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Monolog\DateTimeImmutable;
 
@@ -28,11 +30,17 @@ class Figure
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="figures")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $author;
+    private ?User $author;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Discussion::class, mappedBy="articles")
+     */
+    private Collection $discussions;
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->discussions = new ArrayCollection();
     }
 
     public function getTitle(): ?string
@@ -67,6 +75,36 @@ class Figure
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Discussion[]
+     */
+    public function getDiscussions(): Collection
+    {
+        return $this->discussions;
+    }
+
+    public function addDiscussion(Discussion $discussion): self
+    {
+        if (!$this->discussions->contains($discussion)) {
+            $this->discussions[] = $discussion;
+            $discussion->setArticles($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscussion(Discussion $discussion): self
+    {
+        if ($this->discussions->removeElement($discussion)) {
+            // set the owning side to null (unless already changed)
+            if ($discussion->getArticles() === $this) {
+                $discussion->setArticles(null);
+            }
+        }
 
         return $this;
     }
