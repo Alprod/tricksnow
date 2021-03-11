@@ -40,18 +40,24 @@ class Figure
     /**
      * @ORM\ManyToOne(targetEntity=GroupFigure::class, inversedBy="figures")
      */
-    private $groupFigure;
+    private ?GroupFigure $groupFigure;
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures")
      */
     private Collection $images;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="figures")
+     */
+    private Collection $videos;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->discussions = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->videos = new ArrayCollection();
     }
 
     public function getTitle(): ?string
@@ -156,6 +162,36 @@ class Figure
             // set the owning side to null (unless already changed)
             if ($image->getFigures() === $this) {
                 $image->setFigures(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Video[]
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setFigures($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getFigures() === $this) {
+                $video->setFigures(null);
             }
         }
 
