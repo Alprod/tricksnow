@@ -10,22 +10,22 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210311221320 extends AbstractMigration
+final class Version20210314174249 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return 'Ajout du champ date de création';
+        return 'Céation new table group figure';
     }
 
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE video ADD created_at DATETIME NOT NULL');
+        $this->addSql('CREATE TABLE figure_group (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(100) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE video DROP created_at');
+        $this->addSql('DROP TABLE figure_group');
     }
 }
