@@ -2,40 +2,41 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Discussion;
 use App\Entity\Message;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\Entity\User;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
-use App\DataFixtures\UserFixtures as Users;
 
-class MessageFixtures extends Fixture implements DependentFixtureInterface
+class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
 {
-    public const MESSAGE_REFERENCE = 'message';
 
-    public function load(ObjectManager $manager)
+    /**
+     * @param ObjectManager $manager
+     * @return mixed
+     * @throws \Exception
+     */
+    protected function loadData(ObjectManager $manager)
     {
-        $faker = Factory::create('fr_FR');
+        $this->createMany(Message::class, 20, function(Message $message){
 
-        for ($msg = 1; $msg <= 3; $msg++) {
-            $message = new Message();
-            $authors = $this->getReference(Users::USER_REFERENCE);
-            $message->setContenu(
-                $faker->boolean ? $faker->realText(500, 3) : $faker->realText(10, 3))
-                ->setAuthorMsg($authors)
-                ->setCreatedAt($faker->dateTimeBetween('-10 months'));
+            $message->setContenu($this->faker->paragraph(4, true))
+                ->setAuthorMsg($this->getRandomReference(User::class))
+                ->setDiscussion($this->getRandomReference(Discussion::class))
+                ->setCreatedAt($this->faker->dateTimeBetween("-9 months"));
+        });
 
-            $this->setReference(self::MESSAGE_REFERENCE, $message);
-
-            $manager->persist($message);
-        }
         $manager->flush();
     }
 
+    /**
+     * @return mixed
+     */
     public function getDependencies(): array
     {
         return [
-            Users::class
+            UserFixtures::class,
+            DiscussionFixtures::class
         ];
     }
 }

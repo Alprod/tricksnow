@@ -20,7 +20,7 @@ class FigureGroup
     private ?string $title;
 
     /**
-     * @ORM\OneToMany(targetEntity=Figure::class, mappedBy="figureGroup")
+     * @ORM\OneToMany(targetEntity=Figure::class, mappedBy="figureGroup", cascade={"persist"})
      */
     private Collection $figures;
 

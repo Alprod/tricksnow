@@ -4,50 +4,61 @@ namespace App\DataFixtures;
 
 use App\Entity\Discussion;
 use App\Entity\Figure;
+use App\Entity\FigureGroup;
 use App\Entity\Image;
+use App\Entity\User;
 use App\Entity\Video;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 
-class FigureFixtures extends Fixture
+class FigureFixtures extends BaseFixtures implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+
+    protected function loadData(ObjectManager $manager)
     {
-        $faker = Factory::create('fr_FR');
-        $faker->addProvider(new \Faker\Provider\Youtube($faker));
+        $this->createMany(Figure::class, 20, function(Figure $figure) use ($manager){
+            $figure
+                ->setTitle($this->faker->words(2, true))
+                ->setDescription($this->faker->realText(900, 3))
+                ->setAuthor($this->getRandomReference(User::class))
+                ->setFigureGroup($this->getRandomReference(FigureGroup::class))
+                ->setCreatedAt($this->faker->dateTimeBetween('-2 years'));
 
-        for ($figs = 1; $figs <= mt_rand(2, 5); $figs++) {
-            $figures = new Figure();
-            $figures->setTitle($faker->words(2, true))
-                ->setDescription($faker->realText(1500, 3))
-                ->setCreatedAt($faker->dateTimeBetween('-2 years', '-11 months'));
+            $discussion = new Discussion();
 
-            $manager->persist($figures);
+            $discussion->setArticles($figure);
 
-            for ($img = 1; $img <= mt_rand(3, 6); $img++) {
-                $images = (new Image())->setTitle($faker->realText(2, 3))
-                    ->setLink($faker->imageUrl(350, 150, 'animals'))
-                    ->setFigures($figures)
-                    ->setCreatedAt($figures->getCreatedAt());
-
-                $manager->persist($images);
-            }
-
-            for ($vdo = 1; $vdo <= mt_rand(3, 5); $vdo++) {
-                $videos = (new Video())->setTitle($faker->realText(3, 3))
-                    ->setLink($faker->youtubeUri())
-                    ->setFigures($figures)
-                    ->setCreatedAt($figures->getCreatedAt());
-
-                $manager->persist($videos);
-            }
-
-            $discussion = (new Discussion())->setArticles($figures);
             $manager->persist($discussion);
 
-        }
+            for($img = 1; $img <= random_int(2, 7); ++$img) {
+
+                $image = (new Image())->setCreatedAt($figure->getCreatedAt())
+                                      ->setTitle($this->faker->words(3, true))
+                                      ->setLink($this->faker->imageUrl(350, 150, 'animals'))
+                                      ->setFigures($figure);
+
+                $manager->persist($image);
+            }
+
+            for($vdeo = 1; $vdeo <= random_int(2, 7); ++$vdeo) {
+
+                $video = (new Video())->setCreatedAt($figure->getCreatedAt())
+                                      ->setTitle($this->faker->words(3, true))
+                                      ->setLink($this->faker->youtubeUri())
+                                      ->setFigures($figure);
+
+                $manager->persist($video);
+            }
+        });
 
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+            GroupFigureFixtures::class
+        ];
     }
 }

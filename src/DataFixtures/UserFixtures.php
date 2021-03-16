@@ -6,15 +6,11 @@ namespace App\DataFixtures;
 
 
 use App\Entity\User;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserFixtures extends Fixture implements OrderedFixtureInterface
+class UserFixtures extends BaseFixtures
 {
-    public const USER_REFERENCE = 'author';
     public const DEFAULT_USER = [
                         'email'=>'alain@orange.fr',
                         'password'=>'Password43',
@@ -29,12 +25,8 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $this->_encoder = $encoder;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function load(ObjectManager $manager)
+    protected function loadData(ObjectManager $manager)
     {
-        $faker = Factory::create('fr_FR');
         $defaultUser = new User();
         $passHash = $this->_encoder->encodePassword($defaultUser, self::DEFAULT_USER['password']);
 
@@ -45,27 +37,16 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 
         $manager->persist($defaultUser);
 
-        for ($user = 0; $user <= 10; ++$user) {
-            $users = new User();
+        $this->createMany(User::class, 10, function(User $users) {
             $passHash = $this->_encoder->encodePassword($users, 'Password34');
+            $users->setAvatar($this->faker->imageUrl(90, 90))
+              ->setEmail($this->faker->freeEmail)
+              ->setPassword($passHash)
+              ->setFirstname($this->faker->firstName)
+              ->setLastname($this->faker->lastName)
+              ->setCreatedAt($this->faker->dateTimeBetween('-1 years'));
 
-            $users->setAvatar($faker->imageUrl(90, 90))
-                ->setEmail($faker->freeEmail)
-                ->setPassword($passHash)
-                ->setFirstname($faker->firstName)
-                ->setLastname($faker->lastName)
-                ->setCreatedAt($faker->dateTimeBetween('-1 years'));
-
-            $this->setReference(self::USER_REFERENCE, $users);
-
-            $manager->persist($users);
-
-        }
+        });
         $manager->flush();
-    }
-
-    public function getOrder(): int
-    {
-        return 1;
     }
 }

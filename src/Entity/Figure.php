@@ -48,7 +48,7 @@ class Figure
     private Collection $videos;
 
     /**
-     * @ORM\ManyToOne(targetEntity=FigureGroup::class, inversedBy="figures")
+     * @ORM\ManyToOne(targetEntity=FigureGroup::class, inversedBy="figures", cascade={"persist"})
      */
     private $figureGroup;
 
