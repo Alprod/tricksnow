@@ -7,13 +7,14 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements OrderedFixtureInterface
 {
-    public const USER_REFERENCE = 'page';
+    public const USER_REFERENCE = 'author';
     public const DEFAULT_USER = [
                         'email'=>'alain@orange.fr',
                         'password'=>'Password43',
@@ -48,7 +49,6 @@ class UserFixtures extends Fixture
             $users = new User();
             $passHash = $this->_encoder->encodePassword($users, 'Password34');
 
-
             $users->setAvatar($faker->imageUrl(90, 90))
                 ->setEmail($faker->freeEmail)
                 ->setPassword($passHash)
@@ -56,8 +56,16 @@ class UserFixtures extends Fixture
                 ->setLastname($faker->lastName)
                 ->setCreatedAt($faker->dateTimeBetween('-1 years'));
 
+            $this->setReference(self::USER_REFERENCE, $users);
+
             $manager->persist($users);
+
         }
         $manager->flush();
+    }
+
+    public function getOrder(): int
+    {
+        return 1;
     }
 }
