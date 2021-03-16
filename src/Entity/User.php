@@ -52,12 +52,12 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity=Figure::class, mappedBy="author")
      */
-    private $figures;
+    private Collection $figures;
 
     /**
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="authorMsg")
      */
-    private $messages;
+    private Collection $messages;
 
 
     public function __construct()

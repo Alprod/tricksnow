@@ -14,7 +14,7 @@ final class Version20210311214930 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return '';
+        return 'Table groupe figure';
     }
 
     public function up(Schema $schema) : void

@@ -38,11 +38,6 @@ class Figure
     private Collection $discussions;
 
     /**
-     * @ORM\ManyToOne(targetEntity=GroupFigure::class, inversedBy="figures")
-     */
-    private ?GroupFigure $groupFigure;
-
-    /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures")
      */
     private Collection $images;
@@ -51,6 +46,11 @@ class Figure
      * @ORM\OneToMany(targetEntity=Video::class, mappedBy="figures")
      */
     private Collection $videos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=FigureGroup::class, inversedBy="figures", cascade={"persist"})
+     */
+    private $figureGroup;
 
     public function __construct()
     {
@@ -126,18 +126,6 @@ class Figure
         return $this;
     }
 
-    public function getGroupFigure(): ?GroupFigure
-    {
-        return $this->groupFigure;
-    }
-
-    public function setGroupFigure(?GroupFigure $groupFigure): self
-    {
-        $this->groupFigure = $groupFigure;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Image[]
      */
@@ -194,6 +182,18 @@ class Figure
                 $video->setFigures(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFigureGroup(): ?FigureGroup
+    {
+        return $this->figureGroup;
+    }
+
+    public function setFigureGroup(?FigureGroup $figureGroup): self
+    {
+        $this->figureGroup = $figureGroup;
 
         return $this;
     }

@@ -14,7 +14,7 @@ final class Version20210311211640 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return '';
+        return 'Table Discussion';
     }
 
     public function up(Schema $schema) : void

@@ -2,25 +2,25 @@
 
 namespace App\Entity;
 
-use App\Repository\GroupFigureRepository;
+use App\Repository\FigureGroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=GroupFigureRepository::class)
+ * @ORM\Entity(repositoryClass=FigureGroupRepository::class)
  */
-class GroupFigure
+class FigureGroup
 {
     use ResourceId;
 
     /**
-     * @ORM\Column(type="string", length=90)
+     * @ORM\Column(type="string", length=100)
      */
     private ?string $title;
 
     /**
-     * @ORM\OneToMany(targetEntity=Figure::class, mappedBy="groupFigure")
+     * @ORM\OneToMany(targetEntity=Figure::class, mappedBy="figureGroup", cascade={"persist"})
      */
     private Collection $figures;
 
@@ -28,7 +28,6 @@ class GroupFigure
     {
         $this->figures = new ArrayCollection();
     }
-
 
     public function getTitle(): ?string
     {
@@ -54,7 +53,7 @@ class GroupFigure
     {
         if (!$this->figures->contains($figure)) {
             $this->figures[] = $figure;
-            $figure->setGroupFigure($this);
+            $figure->setFigureGroup($this);
         }
 
         return $this;
@@ -64,8 +63,8 @@ class GroupFigure
     {
         if ($this->figures->removeElement($figure)) {
             // set the owning side to null (unless already changed)
-            if ($figure->getGroupFigure() === $this) {
-                $figure->setGroupFigure(null);
+            if ($figure->getFigureGroup() === $this) {
+                $figure->setFigureGroup(null);
             }
         }
 

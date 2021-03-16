@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+    tricksnowdb:
+        image: mysql:latest
+        environment:
+            MYSQL_DATABASE: 'tricksnowdb'
+            MYSQL_ROOT_PASSWORD: 'alprod81'
+            MYSQL_USER: 'alprod'
+            MYSQL_PASSWORD: 'alprod81'
+        ports:
+            - '3307:3306'
+        volumes:
+            - ./data:/var/lib/mysql
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
+        links:
+            - tricksnowdb
+
+    php:
+        build: .
+        ports:
+            - "8888:80"
+        depends_on:
+            - tricksnowdb
+        volumes:
+            - ./docker/vhost:/etc/apache2/sites-enabled
+            - ./:/var/www

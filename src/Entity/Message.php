@@ -56,6 +56,15 @@ class Message
         return $this->created_at;
     }
 
+    /**
+     * @param DateTimeInterface $created_at
+     */
+    public function setCreatedAt(DateTimeInterface $created_at):void
+    {
+        $this->created_at = $created_at;
+    }
+
+
     public function getAuthorMsg(): ?User
     {
         return $this->authorMsg;
