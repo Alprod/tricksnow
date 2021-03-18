@@ -3,11 +3,23 @@
 {% block title %}TrickSnow{% endblock %}
 
 {% block body %}
-    <style>
-
-    </style>
-
-    <div class="container">
-        <h1 class="mt-5">{{ title }}</h1>
-    </div>
+    <h1 class="mt-5">{{ title }}</h1>
+    <section class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-2">
+        {% for figure in figures %}
+            <div class="col">
+                <article class="card mx-auto">
+                    <img src="{{ figure.images[0].link }}" class="card-img-top" alt="{{ figure.images[0].title }}">
+                    <div class="card-body d-flex flex-row">
+                        <div class="w-100">
+                            <a class="fs-6 fw-lighter text-dark" href="{{ path('figure_detail', {'id': figure.id}) }}">{{ figure.title }}</a>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <i class="bi bi-pencil-fill"></i>
+                            <i class="bi bi-trash-fill"></i>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+    </section>
 {% endblock %}

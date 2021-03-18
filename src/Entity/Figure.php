@@ -27,10 +27,10 @@ class Figure
     private string $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="figures")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="figures", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?User $author;
+    private User $author;
 
     /**
      * @ORM\OneToMany(targetEntity=Discussion::class, mappedBy="articles")
@@ -38,17 +38,17 @@ class Figure
     private Collection $discussions;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures", fetch="EAGER")
      */
     private Collection $images;
 
     /**
-     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="figures")
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="figures",  fetch="EAGER")
      */
     private Collection $videos;
 
     /**
-     * @ORM\ManyToOne(targetEntity=FigureGroup::class, inversedBy="figures", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=FigureGroup::class, inversedBy="figures", cascade={"persist"}, fetch="EAGER")
      */
     private $figureGroup;
 
@@ -84,12 +84,12 @@ class Figure
         return $this;
     }
 
-    public function getAuthor(): ?User
+    public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(?User $author): self
+    public function setAuthor(User $author): self
     {
         $this->author = $author;
 

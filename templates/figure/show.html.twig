@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {% endblock %}
+
+{% block body %}
+	<section class="">
+		<h1></h1>
+		<div class="row">
+			<div class="col-12">
+				<img class="img-fluid" src="{{ figure.images[0].link }}" alt="{{ figure.images[0].title }}" style="width: 90rem">
+			</div>
+			<div class="col-12 mt-4">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row g-0">
+							{% for image in figure.images %}
+								<div class="col-md-3 mx-auto">
+									<img class="" src="{{ image.link }}" alt="{{ image.title }}"style="width: 10rem">
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="row">
+							{% for video in figure.videos %}
+								<div class="col-md-3 mx-auto">
+									<img class="" src="{{ video.link }}" alt="{{  video.title }}" style="width: 10rem">
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 mt-4">
+				{{ figure.description }}
+			</div>
+			<div class="col-12">
+				<div class="row mt-4">
+					<div class="col-3">Ecrit par {{ figure.author.firstname }} {{ figure.author.lastname }}</div>
+					<div class="col-3">Créer le {{ figure.createdAt | date('d/m/Y') }}</div>
+					<div class="col-3">Group de figure : {{ figure.figureGroup.title }}</div>
+					<div class="col-3"></div>
+				</div>
+			</div>
+			<div class="col-12"></div>
+			<div class="col-12"></div>
+		</div>
+	</section>
+{{ dump(figure) }}
+{% endblock %}

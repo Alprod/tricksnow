@@ -44,7 +44,7 @@ class FigureFixtures extends BaseFixtures implements DependentFixtureInterface
 
                 $video = (new Video())->setCreatedAt($figure->getCreatedAt())
                                       ->setTitle($this->faker->words(3, true))
-                                      ->setLink($this->faker->youtubeUri())
+                                      ->setLink($this->faker->imageUrl(350, 150))
                                       ->setFigures($figure);
 
                 $manager->persist($video);
