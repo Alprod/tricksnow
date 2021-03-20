@@ -14,8 +14,8 @@
 					<div class="col-md-6">
 						<div class="row g-0">
 							{% for image in figure.images %}
-								<div class="col-md-3 mx-auto">
-									<img class="" src="{{ image.link }}" alt="{{ image.title }}"style="width: 10rem">
+								<div class="col-md-4 mx-auto">
+									<img class="pt-2" src="{{ image.link }}" alt="{{ image.title }}"style="width: 9rem">
 								</div>
 							{% endfor %}
 						</div>
@@ -23,8 +23,8 @@
 					<div class="col-md-6">
 						<div class="row">
 							{% for video in figure.videos %}
-								<div class="col-md-3 mx-auto">
-									<img class="" src="{{ video.link }}" alt="{{  video.title }}" style="width: 10rem">
+								<div class="col-md-4 mx-auto">
+									<img class="pt-2" src="{{ video.link }}" alt="{{  video.title }}" style="width: 9rem">
 								</div>
 							{% endfor %}
 						</div>
@@ -43,8 +43,11 @@
 				</div>
 			</div>
 			<div class="col-12"></div>
-			<div class="col-12"></div>
+			<div class="col-12">
+				{% for discussion in discussions %}
+					<p>{{ dump(discussion.figures) }}</p>
+				{% endfor %}
+			</div>
 		</div>
 	</section>
-{{ dump(figure) }}
 {% endblock %}
