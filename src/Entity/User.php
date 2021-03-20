@@ -50,12 +50,12 @@ class User implements UserInterface
     private ?string $lastname;
 
     /**
-     * @ORM\OneToMany(targetEntity=Figure::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Figure::class, mappedBy="author", fetch="EAGER")
      */
     private Collection $figures;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="authorMsg")
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="authorMsg", fetch="EAGER")
      */
     private Collection $messages;
 

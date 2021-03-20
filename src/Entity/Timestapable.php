@@ -46,6 +46,4 @@ trait Timestapable
         $this->updateAt = $updateAt;
     }
 
-
-
 }

@@ -30,7 +30,7 @@ class Message
     private ?User $authorMsg;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Discussion::class, inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=Discussion::class, inversedBy="messages", fetch="EAGER")
      */
     private ?Discussion $discussion;
 
