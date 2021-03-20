@@ -12,26 +12,27 @@ class FigureController extends AbstractController
 {
     /**
      * @Route("/figure", name="figure")
+     * @param FigureRepository $repo
+     * @return Response
      */
-    public function index(): Response
+    public function index(FigureRepository $repo): Response
     {
+        $figures = $repo->findAll();
+
         return $this->render('figure/index.html.twig', [
-            'controller_name' => 'FigureController',
+            'title'=> 'Liste de nos figures',
+            'figures' => $figures,
         ]);
     }
 
     /**
      * @Route("/", name="home")
-     * @param FigureRepository $repo
-     * @return Response
      */
-    public function home(FigureRepository $repo): Response
+    public function home(): Response
     {
-        $figures = $repo->findAll();
 
         return $this->render('figure/home.html.twig', [
-            "title" => "Welcome to TrickSnow",
-            "figures" => $figures
+            "title" => "Welcome to TrickSnow"
         ]);
     }
 
@@ -44,9 +45,12 @@ class FigureController extends AbstractController
     {
         $repo = $this->getDoctrine()->getRepository(Figure::class);
         $figure = $repo->find($id);
+        $discussion = $figure->getDiscussions()->toArray();
+
 
         return $this->render('figure/show.html.twig', [
-            'figure' => $figure
+            'figure' => $figure,
+            'discussions'=> $discussion
         ]);
     }
 
