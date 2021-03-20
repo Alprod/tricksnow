@@ -33,7 +33,7 @@ class Figure
     private User $author;
 
     /**
-     * @ORM\OneToMany(targetEntity=Discussion::class, mappedBy="articles")
+     * @ORM\OneToMany(targetEntity=Discussion::class, mappedBy="figures", fetch="EAGER")
      */
     private Collection $discussions;
 

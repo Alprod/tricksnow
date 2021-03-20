@@ -17,14 +17,15 @@ class Discussion
     use ResourceId;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="discussion")
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="discussion", fetch="EAGER")
      */
     private Collection $messages;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Figure::class, inversedBy="discussions")
+     * @ORM\ManyToOne(targetEntity=Figure::class, inversedBy="discussions", fetch="EAGER")
      */
     private ?Figure $figures;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -69,16 +70,20 @@ class Discussion
         return $this;
     }
 
-    public function getArticles(): ?Figure
+    /**
+     * @return Figure|null
+     */
+    public function getFigures(): ?Figure
     {
         return $this->figures;
     }
 
-    public function setArticles(?Figure $figures): self
+    /**
+     * @param Figure|null $figures
+     */
+    public function setFigures(?Figure $figures): void
     {
         $this->figures = $figures;
-
-        return $this;
     }
 
     public function getCreatedAt(): ?DateTimeInterface
