@@ -38,13 +38,11 @@ class FigureController extends AbstractController
 
     /**
      * @Route("/figure/{id}", name="figure_detail")
-     * @param $id
+     * @param Figure $figure
      * @return Response
      */
-    public function show($id): Response
+    public function show(Figure $figure): Response
     {
-        $repo = $this->getDoctrine()->getRepository(Figure::class);
-        $figure = $repo->find($id);
         $discussion = $figure->getDiscussions()->toArray();
 
 
