@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Image index{% endblock %}
+
+{% block body %}
+    <h1>Image index</h1>
+    <a class="btn btn-warning" href="{{ path('image_new') }}">Create new</a>
+    <div class="row g-2">
+    {% for image in images %}
+        <div class="card mb-3 col-6 m-auto" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img class="img-fluid" src="{{ image.link }}" alt="{{ image.title }}">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ image.title }}</h5>
+                        <div class="card-text">id de la figure : {{ image.figures.id }}</div>
+                        <div class="card-text">id de l'image : {{ image.id }}</div>
+                        <p class="card-text"><small class="text-muted">{{ image.createdAt ? image.createdAt|date('d/n/Y H:i') : '' }}</small></p>
+                        <a href="{{ path('image_show', {'id': image.id}) }}" class="btn btn-primary" >Voir</a>
+                        <a href="{{ path('image_edit', {'id': image.id}) }}" class="btn btn-info">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}

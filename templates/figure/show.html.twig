@@ -11,20 +11,31 @@
 			</div>
 			<div class="col-12 mt-4">
 				<div class="row">
-					<div class="col-md-6">
-						<div class="row g-0">
+					<div class="col-md-12">
+						<h6>images</h6>
+						<a class="btn btn-warning" href="{{ path('image_new') }}">Ajouter une nouvelle image</a>
+						<div class="d-flex flex-row">
 							{% for image in figure.images %}
-								<div class="col-md-4 mx-auto">
-									<img class="pt-2" src="{{ image.link }}" alt="{{ image.title }}"style="width: 9rem">
+								<div class="mx-2">
+									<img class="pt-2 img-fluid" src="{{ image.link }}" alt="{{ image.title }}" style="width: 12rem">
+									<div class="mt-2">
+										<a class="btn btn-outline-success" href="{{ path('image_edit', {'id': image.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+										{{ include('image/_delete_form.html.twig') }}
+									</div>
 								</div>
 							{% endfor %}
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="row">
+					<div class="col-md-12 mt-3">
+						<h6>vidéos</h6>
+						<div class="d-flex flex-row">
 							{% for video in figure.videos %}
-								<div class="col-md-4 mx-auto">
-									<img class="pt-2" src="{{ video.link }}" alt="{{  video.title }}" style="width: 9rem">
+								<div class="mx-2">
+									<img class="pt-2" src="{{ video.link }}" alt="{{  video.title }}" style="width: 12rem">
+									<div class="border p-1 mt-2">
+										<a class="link-dark" href=""><i class="bi bi-pencil-fill p-1"></i></a>
+										<a class="link-dark" href=""><i class="bi bi-trash-fill p-1"></i></a>
+									</div>
 								</div>
 							{% endfor %}
 						</div>

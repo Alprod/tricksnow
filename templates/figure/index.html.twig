@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FigureController!{% endblock %}
+{% block title %}TrickSnow | {{ title }}{% endblock %}
 
 {% block body %}
     <h1 class="mt-5">{{ title }}</h1>
@@ -14,8 +14,8 @@
                             <a class="fs-6 fw-lighter link-secondary" href="{{ path('figure_detail', {'id': figure.id}) }}">{{ figure.title }}</a>
                         </div>
                         <div class="flex-shrink-0">
-                            <i class="bi bi-pencil-fill"></i>
-                            <i class="bi bi-trash-fill"></i>
+                            <a href="{{ path('edit_figure', {'id': figure.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                            <a href=""><i class="bi bi-trash-fill"></i></a>
                         </div>
                     </div>
                 </article>
