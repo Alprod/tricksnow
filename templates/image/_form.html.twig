@@ -5,5 +5,6 @@
         {{ form_row(form.link, {'attr':{'class':'form-control', 'aria-label':'Upload'}}) }}
     </div>
     <button class="btn btn-outline-success mt-4">{{ button_label|default('Save') }}</button>
+    <a class="btn btn-info mt-4" href="{{ path('figure_detail', {'id': image.figures.id}) }}">Retour figure</a>
 </div>
 {{ form_end(form) }}

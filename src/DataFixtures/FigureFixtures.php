@@ -16,7 +16,7 @@ class FigureFixtures extends BaseFixtures implements DependentFixtureInterface
 
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Figure::class, 20, function(Figure $figure) use ($manager){
+        $this->createMany(Figure::class, 20, function(Figure $figure, $index) use ($manager){
             $figure
                 ->setTitle($this->faker->words(2, true))
                 ->setDescription($this->faker->realText(900, 3))
@@ -24,11 +24,7 @@ class FigureFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setFigureGroup($this->getRandomReference(FigureGroup::class))
                 ->setCreatedAt($this->faker->dateTimeBetween('-2 years'));
 
-            $discussion = new Discussion();
-
-            $discussion->setArticles($figure);
-
-            $manager->persist($discussion);
+            $this->setReference('figure_'.$index, $figure);
 
             for($img = 1; $img <= random_int(2, 7); ++$img) {
 

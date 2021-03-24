@@ -13,6 +13,7 @@ class ImageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //Verifier si je suis sur un form edit ou creation
         $builder
             ->add('title', TextType::class, [
                 'attr' => [
@@ -23,12 +24,6 @@ class ImageType extends AbstractType
                 'data_class' => null
             ])
         ;
-    }
-
-    public function upload()
-    {
-        $fileName = __DIR__.'/public/images';
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

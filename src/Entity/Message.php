@@ -25,7 +25,7 @@ class Message
     private DateTimeInterface $created_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages", fetch="EAGER")
      */
     private ?User $authorMsg;
 

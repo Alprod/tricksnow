@@ -17,6 +17,8 @@ class VideoController extends AbstractController
 {
     /**
      * @Route("/", name="video_index", methods={"GET"})
+     * @param VideoRepository $videoRepository
+     * @return Response
      */
     public function index(VideoRepository $videoRepository): Response
     {
@@ -27,6 +29,8 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/new", name="video_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -50,6 +54,8 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/{id}", name="video_show", methods={"GET"})
+     * @param Video $video
+     * @return Response
      */
     public function show(Video $video): Response
     {
@@ -60,6 +66,9 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="video_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Video $video
+     * @return Response
      */
     public function edit(Request $request, Video $video): Response
     {
@@ -69,7 +78,7 @@ class VideoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('video_index');
+            return $this->redirectToRoute('figure_detail', ["id"=>$video->getFigures()->getId()]);
         }
 
         return $this->render('video/edit.html.twig', [
@@ -80,6 +89,9 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/{id}", name="video_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Video $video
+     * @return Response
      */
     public function delete(Request $request, Video $video): Response
     {
@@ -89,6 +101,6 @@ class VideoController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('video_index');
+        return $this->redirectToRoute('figure_detail', ["id"=>$video->getFigures()->getId()]);
     }
 }

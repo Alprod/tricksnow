@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Figure;
-use App\Entity\User;
 use App\Form\FigureType;
 use App\Repository\FigureRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,14 +51,22 @@ class FigureController extends AbstractController
         if (!$figure){
             $figure = new Figure();
         }
+
         $form = $this->createForm(FigureType::class, $figure);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository(UserRepository::class)->findBy(130);
+
+            $figure->setAuthor($user);
             if (!$figure->getId()){
                 $figure->setUpdateAt(new \DateTime('now'));
             }
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($figure);
+            $em->flush();
 
             return $this->redirectToRoute('figure_detail', ["id" => $figure->getId()]);
         }
@@ -79,7 +85,9 @@ class FigureController extends AbstractController
     public function show(Figure $figure): Response
     {
         $discussion = $figure->getDiscussions()->toArray();
-
+        /*$em =$this->getDoctrine()->getManager();
+        $em->getRepository(MessageRepository::class)->findByDiscussion();
+        dump($discussion);*/
         return $this->render('figure/show.html.twig', [
             'figure' => $figure,
             'discussions'=> $discussion
