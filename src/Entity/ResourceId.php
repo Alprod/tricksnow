@@ -9,15 +9,14 @@ use Doctrine\ORM\Mapping as ORM;
 trait ResourceId
 {
     /**
-     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private int $id;
+    private $id;
 
 
-    public function getId():int
+    public function getId()
     {
         return $this->id;
     }

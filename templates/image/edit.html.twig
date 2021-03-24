@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Edit Image{% endblock %}
+
+{% block body %}
+    <h1>Edit Image</h1>
+    <img class="mb-4" src="{{ image.link }}" alt="{{ image.title }}">
+    {{ include('image/_form.html.twig', {'button_label': 'Save'}) }}
+    <a class="btn btn-info mt-4" href="{{ path('figure_detail', {'id': image.figures.id}) }}">Retour figure</a>
+{% endblock %}

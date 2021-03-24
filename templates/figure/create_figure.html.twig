@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% set modeEdit = (editMode) ? "Mise a jour de la figure" : "Création nouvelle figure"  %}
+
+{% form_theme formFigure 'bootstrap_4_layout.html.twig' %}
+
+{% block title %} {{ modeEdit }} {% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="mt-5 mb-5">{{ modeEdit }}</h1>
+		{{ form_start(formFigure) }}
+			{{ form_widget(formFigure) }}
+			<button type="submit" class="btn btn-success mt-3">
+				{{ (editMode) ? "Modifer la figure" : "Ajouter la figure" }}
+			</button>
+		{{ form_end(formFigure) }}
+	</div>
+{% endblock %}
