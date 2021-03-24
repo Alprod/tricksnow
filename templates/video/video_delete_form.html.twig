@@ -1,24 +1,24 @@
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-outline-danger m-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button type="button" class="btn btn-outline-danger m-1" data-bs-toggle="modal" data-bs-target="#videoModalDelete">
     <i class="bi bi-trash-fill"></i>
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="videoModalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Supprimer l'image</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Supprimer la vidéo</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Est vous sur de vouloir supprimer cette image ?
+                Est vous sur de vouloir supprimer cette video ?
             </div>
             <div class="modal-footer">
-                <form method="post" action="{{ path('image_delete', {'id': image.id}) }}">
+                <form method="post" action="{{ path('video_delete', {'id': video.id}) }}">
                     <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ image.id) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                     <button class="btn btn-danger">Supprimer</button>
                 </form>
