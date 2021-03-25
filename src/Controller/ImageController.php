@@ -78,7 +78,7 @@ class ImageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('image_index');
+            return $this->redirectToRoute('figure_detail', ["id"=>$image->getFigures()->getId()]);
         }
 
         return $this->render('image/edit.html.twig', [

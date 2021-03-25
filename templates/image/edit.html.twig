@@ -6,6 +6,5 @@
 {% block body %}
     <h1>Edit Image</h1>
     <img class="mb-4" src="{{ image.link }}" alt="{{ image.title }}">
-    {{ include('image/_form.html.twig', {'button_label': 'Save'}) }}
-    <a class="btn btn-info mt-4" href="{{ path('figure_detail', {'id': image.figures.id}) }}">Retour figure</a>
+    {{ include('image/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 {% endblock %}

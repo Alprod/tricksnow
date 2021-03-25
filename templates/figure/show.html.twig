@@ -14,12 +14,12 @@
 					<div class="col-md-12">
 						<h6>images</h6>
 						<a class="btn btn-warning" href="{{ path('image_new') }}">Ajouter une nouvelle image</a>
-						<div class="d-flex flex-row">
+						<div class="d-flex flex-row flex-wrap">
 							{% for image in figure.images %}
 								<div class="mx-2">
 									<img class="pt-2 img-fluid" src="{{ image.link }}" alt="{{ image.title }}" style="width: 12rem">
-									<div class="mt-2">
-										<a class="btn btn-outline-success" href="{{ path('image_edit', {'id': image.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+									<div class="d-flex mt-2 justify-content-end">
+										<a class="btn btn-outline-success m-1" href="{{ path('image_edit', {'id': image.id}) }}"><i class="bi bi-pencil-fill"></i></a>
 										{{ include('image/_delete_form.html.twig') }}
 									</div>
 								</div>
@@ -28,13 +28,14 @@
 					</div>
 					<div class="col-md-12 mt-3">
 						<h6>vidéos</h6>
-						<div class="d-flex flex-row">
+						<a class="btn btn-warning" href="{{ path('video_new') }}">Ajouter une nouvelle video</a>
+						<div class="d-flex flex-row flex-wrap">
 							{% for video in figure.videos %}
 								<div class="mx-2">
 									<img class="pt-2" src="{{ video.link }}" alt="{{  video.title }}" style="width: 12rem">
-									<div class="border p-1 mt-2">
-										<a class="link-dark" href=""><i class="bi bi-pencil-fill p-1"></i></a>
-										<a class="link-dark" href=""><i class="bi bi-trash-fill p-1"></i></a>
+									<div class="d-flex mt-2 justify-content-end ">
+										<a class="btn btn-outline-success m-1" href="{{ path('video_edit', {'id': video.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+										{{ include('video/video_delete_form.html.twig') }}
 									</div>
 								</div>
 							{% endfor %}
@@ -47,16 +48,25 @@
 			</div>
 			<div class="col-12">
 				<div class="row mt-4">
-					<div class="col-3">Ecrit par {{ figure.author.firstname }} {{ figure.author.lastname }}</div>
-					<div class="col-3">Créer le {{ figure.createdAt | date('d/m/Y') }}</div>
-					<div class="col-3">Group de figure : {{ figure.figureGroup.title }}</div>
-					<div class="col-3"></div>
+					<div class="col-md-4 mt-2"><span class="fw-bold">Ecrit par </span>{{ figure.author.firstname }} {{ figure.author.lastname }}</div>
+					<div class="col-md-4 mt-2"><span class="fw-bold">Créer le </span>{{ figure.createdAt | date('d/m/Y') }}</div>
+					<div class="col-md-4 mt-2"><span class="fw-bold">Group de figure : </span>{{ figure.figureGroup.title }}</div>
 				</div>
 			</div>
 			<div class="col-12"></div>
 			<div class="col-12">
 				{% for discussion in discussions %}
-					<p>{{ dump(discussion.figures) }}</p>
+					{% for message in  discussion.messages %}
+					<div class="d-flex align-items-center w-75 mx-auto my-4 shadow p-3 mb-5 bg-body rounded">
+						<div class="flex-shrink-0">
+							<img class="rounded-circle" src="{{ message.authorMsg.avatar }}" alt="Avatar de {{ message.authorMsg.firstname }}">
+						</div>
+						<div class="flex-grow-1 ms-3">
+							<p>{{ message.contenu }}</p>
+							<span class="text-muted fst-italic">Rediger par : {{ message.authorMsg.firstname }} {{ message.authorMsg.lastname }} le {{ message.createdAt | date('d/m/Y à H:i') }}</span>
+						</div>
+					</div>
+					{% endfor %}
 				{% endfor %}
 			</div>
 		</div>
