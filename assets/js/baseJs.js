@@ -1,1 +1,1 @@
-console.log('Ma base javascript')
+console.log('Ma base javascript');

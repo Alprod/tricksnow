@@ -11,6 +11,12 @@ import './styles/app.css';
 // start the Stimulus application
 import './bootstrap';
 
-// jQuery
-import $ from 'jquery'
-console.log('Mon Webpack junior')
+//Create global $ and jQuery variables
+import $ from 'jquery';
+global.$ = global.jQuery = $;
+
+import bootstrap from "bootstrap";
+
+console.log('Mon Webpack junior');
+
+
