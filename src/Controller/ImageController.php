@@ -5,10 +5,15 @@ namespace App\Controller;
 use App\Entity\Image;
 use App\Form\ImageType;
 use App\Repository\ImageRepository;
+use App\Service\FileUploaderImage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @Route("/image")
@@ -67,15 +72,24 @@ class ImageController extends AbstractController
     /**
      * @Route("/{id}/edit", name="image_edit", methods={"GET","POST"})
      * @param Request $request
+     * @param FileUploaderImage $fileUploader
      * @param Image $image
      * @return Response
      */
-    public function edit(Request $request, Image $image): Response
+    public function edit(Request $request,FileUploaderImage $fileUploader, Image $image): Response
     {
         $form = $this->createForm(ImageType::class, $image);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $linkFile */
+            $linkFile = $form->get('link')->getData();
+
+            if($linkFile) {
+                $linkFileName = $fileUploader->upload($linkFile,'image/edit.html.twig');
+                $image->setLink($linkFileName);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('figure_detail', ["id"=>$image->getFigures()->getId()]);
@@ -84,6 +98,7 @@ class ImageController extends AbstractController
         return $this->render('image/edit.html.twig', [
             'image' => $image,
             'form' => $form->createView(),
+            'error'=> false
         ]);
     }
 
