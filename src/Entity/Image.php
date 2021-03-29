@@ -80,7 +80,7 @@ class Image
         return $this->figures;
     }
 
-    public function setFigures(?Figure $figures): self
+    public function setFigures(?Figure $figures): ?self
     {
         $this->figures = $figures;
 

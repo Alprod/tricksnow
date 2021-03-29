@@ -37,7 +37,7 @@ class UserFixtures extends BaseFixtures
 
         $manager->persist($defaultUser);
 
-        $this->createMany(User::class, 10, function(User $users) {
+        $this->createMany(User::class, 4, function(User $users) {
             $passHash = $this->_encoder->encodePassword($users, 'Password34');
             $users->setAvatar($this->faker->imageUrl(90, 90))
               ->setEmail($this->faker->freeEmail)

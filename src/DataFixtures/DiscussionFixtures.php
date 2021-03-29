@@ -17,7 +17,7 @@ class DiscussionFixtures extends BaseFixtures implements DependentFixtureInterfa
      */
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Discussion::class, 20, function(Discussion $discussion, $index){
+        $this->createMany(Discussion::class, 4, function(Discussion $discussion, $index){
             $discussion->setFigures($this->getReference('figure_'.$index));
         });
 
