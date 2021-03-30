@@ -1,0 +1,14 @@
+input[type=email],
+input[type=password] {
+    margin-top: 30px;
+    border-bottom: 1px solid #0a0a0a;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+
+label[for=inputEmail],
+label[for=inputPassword] {
+    margin-top: 30px;
+}
