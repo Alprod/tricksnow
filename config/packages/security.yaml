@@ -1,7 +1,8 @@
 security:
+    enable_authenticator_manager: false
     encoders:
         App\Entity\User:
-            algorithm: auto
+            algorithm: bcrypt
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -17,10 +18,18 @@ security:
         main:
             anonymous: true
             lazy: true
+            form_login:
+                login_path: login
+                check_path: login
+                csrf_token_generator: security.csrf.token_manager
+                always_use_default_target_path: true
+
             provider: app_user_provider
+
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
+
             logout:
                 path: app_logout
                 target: home
@@ -34,5 +43,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/admin, roles: [IS_AUTHENTICATED_FULLY,ROLE_ADMIN] }
+         - { path: ^/membre, roles: ROLE_USER }
