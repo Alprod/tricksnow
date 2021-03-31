@@ -38,13 +38,15 @@ class UserFixtures extends BaseFixtures
         $manager->persist($defaultUser);
 
         $this->createMany(User::class, 4, function(User $users) {
-            $passHash = $this->_encoder->encodePassword($users, 'Password34');
+            $passHash = $this->_encoder->encodePassword($users, 'password');
             $users->setAvatar($this->faker->imageUrl(90, 90))
-              ->setEmail($this->faker->freeEmail)
-              ->setPassword($passHash)
-              ->setFirstname($this->faker->firstName)
-              ->setLastname($this->faker->lastName)
-              ->setCreatedAt($this->faker->dateTimeBetween('-1 years'));
+                ->setEmail($this->faker->freeEmail)
+                ->setPassword($passHash)
+                ->setFirstname($this->faker->firstName)
+                ->setLastname($this->faker->lastName)
+                ->setRoles(['ROLE_USER'])
+                ->setCreatedAt($this->faker->dateTimeBetween('-1 years'));
+
 
         });
         $manager->flush();
