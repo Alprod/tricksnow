@@ -6,7 +6,6 @@ use App\Repository\FigureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Monolog\DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass=FigureRepository::class)
@@ -198,9 +197,8 @@ class Figure
         return $this;
     }
 
-    /*public function __toString(): string
+    public function __toString(): string
     {
-
         return $this->title;
-    }*/
+    }
 }

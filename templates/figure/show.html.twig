@@ -8,14 +8,16 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="mx-auto">
+					 {% if figure.images|length > 0 %}
 					<img class="img-fluid" src="{{ asset('build/images/' ~ figure.images[0].link) }}" alt="{{ figure.images[0].title }}" style="width: 60rem">
+					{% endif %}
 				</div>
 			</div>
 			<div class="col-12 mt-4">
 				<div class="row">
 					<div class="col-md-12">
 						<h6>images</h6>
-						<a class="btn btn-warning" href="{{ path('image_new') }}">Ajouter une nouvelle image</a>
+						<a class="btn btn-warning" href="{{ path('image_new') }}?figure=3">Ajouter une nouvelle image</a>
 						<div class="d-flex flex-row flex-wrap">
 							{% for image in figure.images %}
 								<div class="mx-2">

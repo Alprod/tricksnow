@@ -32,7 +32,7 @@ class Image
     /**
      * @ORM\ManyToOne(targetEntity=Figure::class, inversedBy="images")
      */
-    private ?Figure $figures;
+    private $figures;
 
     public function __construct()
     {
@@ -75,7 +75,7 @@ class Image
         return $this;
     }
 
-    public function getFigures(): ?Figure
+    public function getFigures()
     {
         return $this->figures;
     }
