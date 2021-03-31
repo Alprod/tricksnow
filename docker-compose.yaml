@@ -2,6 +2,8 @@ version: '3.7'
 services:
     tricksnowdb:
         image: mysql:latest
+        cap_add:
+            - SYS_NICE
         environment:
             MYSQL_DATABASE: 'tricksnowdb'
             MYSQL_ROOT_PASSWORD: 'alprod81'

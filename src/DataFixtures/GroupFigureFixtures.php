@@ -7,7 +7,15 @@ use Doctrine\Persistence\ObjectManager;
 
 class GroupFigureFixtures extends BaseFixtures
 {
-
+    public const GROUP_FIGURE = [
+        'Grabs',
+        'Rotations',
+        'Flips',
+        'Rotations Désaxées',
+        'Slides',
+        'One Foot Tricks',
+        'Old School'
+    ];
     /**
      * @param ObjectManager $manager
      * @return mixed
@@ -17,6 +25,8 @@ class GroupFigureFixtures extends BaseFixtures
         $this->createMany(FigureGroup::class, 5, function(FigureGroup $figureGroup){
             $figureGroup->setTitle($this->faker->words(2, true));
         });
+
+        $manager->flush();
     }
 
 }

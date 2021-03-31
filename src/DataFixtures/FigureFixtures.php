@@ -16,7 +16,7 @@ class FigureFixtures extends BaseFixtures implements DependentFixtureInterface
 
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Figure::class, 20, function(Figure $figure, $index) use ($manager){
+        $this->createMany(Figure::class, 4, function(Figure $figure, $index) use ($manager){
             $figure
                 ->setTitle($this->faker->words(2, true))
                 ->setDescription($this->faker->realText(900, 3))

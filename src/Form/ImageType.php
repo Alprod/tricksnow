@@ -22,7 +22,7 @@ class ImageType extends AbstractType
                 ]
             ])
             ->add('link', FileType::class, [
-                'data_class'=>null,
+                'mapped' =>false,
                 'required' => false,
                 'constraints' => [
                     new File([

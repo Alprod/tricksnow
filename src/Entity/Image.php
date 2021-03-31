@@ -80,7 +80,7 @@ class Image
         return $this->figures;
     }
 
-    public function setFigures(?Figure $figures): self
+    public function setFigures(?Figure $figures): ?self
     {
         $this->figures = $figures;
 
@@ -89,7 +89,6 @@ class Image
 
     public function __toString(): string
     {
-        // TODO: Implement __toString() method.
        return $this->link;
     }
 }

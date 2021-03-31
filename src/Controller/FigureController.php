@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Figure;
+use App\Entity\User;
 use App\Form\FigureType;
 use App\Repository\FigureRepository;
 use App\Repository\UserRepository;
@@ -58,7 +59,7 @@ class FigureController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository(UserRepository::class)->findBy(130);
+            $user = $em->getRepository(UserRepository::class)->findBy(118);
 
             $figure->setAuthor($user);
             if (!$figure->getId()){
