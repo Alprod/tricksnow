@@ -16,6 +16,7 @@ class ImageType extends AbstractType
     {
         //Verifier si je suis sur un form edit ou creation
         $builder
+            ->add('figures')
             ->add('title', TextType::class, [
                 'attr' => [
                     'class' => 'mb-4'

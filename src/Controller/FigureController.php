@@ -58,10 +58,7 @@ class FigureController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository(UserRepository::class)->findBy(118);
-
-            $figure->setAuthor($user);
+            $figure->setAuthor($this->getUser());
             if (!$figure->getId()){
                 $figure->setUpdateAt(new \DateTime('now'));
             }

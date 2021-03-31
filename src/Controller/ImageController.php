@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Figure;
 use App\Entity\Image;
 use App\Form\ImageType;
+use App\Repository\FigureRepository;
 use App\Repository\ImageRepository;
 use App\Service\FileUploaderImage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,7 +38,12 @@ class ImageController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $figureId = $request->request->get('figure');
+        $em = $this->getDoctrine()->getManager();
+        $figure = $em->getRepository(FigureRepository::class)->find($figureId);
+
         $image = new Image();
+        $image->setFigures($figure);
         $form = $this->createForm(ImageType::class, $image);
         $form->handleRequest($request);
 
@@ -75,6 +82,10 @@ class ImageController extends AbstractController
      */
     public function edit(Request $request,FileUploaderImage $fileUploader, Image $image): Response
     {
+        $figureId = $request->request->get('figure');
+        $em = $this->getDoctrine()->getManager();
+        $figure = $em->getRepository(FigureRepository::class)->find($figureId);
+        $image->setFigures($figure);
         $form = $this->createForm(ImageType::class, $image);
         $form->handleRequest($request);
 

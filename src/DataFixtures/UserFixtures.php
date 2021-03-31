@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixtures extends BaseFixtures
 {
     public const DEFAULT_USER = [
-                        'email'=>'alain@orange.fr',
+                        'email'=>'alain@gmail.com',
                         'password'=>'Password43',
                         'firstname'=>'Alain',
                         'lastname'=>'Default User'
@@ -33,6 +33,7 @@ class UserFixtures extends BaseFixtures
         $defaultUser->setEmail(self::DEFAULT_USER['email'])
             ->setPassword($passHash)
             ->setFirstname(self::DEFAULT_USER['firstname'])
+            ->setRoles(['ROLE_ADMIN'])
             ->setLastname(self::DEFAULT_USER['lastname']);
 
         $manager->persist($defaultUser);
