@@ -43,4 +43,4 @@ RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
 
 # On créé un utilisateur avec le même gid/uid que votre local
 # cela va permettre que les fichiers qui sont créés dans le contenaire auront vos droits
-RUN addgroup --system alainandja --gid 1000 && adduser --system alainandja --uid 1000 --ingroup alainandja
+RUN addgroup --system alaingermain --gid 1000 && adduser --system alaingermain --uid 1000 --ingroup alaingermain
