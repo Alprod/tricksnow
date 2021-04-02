@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\VideoRepository;
+
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Monolog\DateTimeImmutable;
 
 /**
- * @ORM\Entity(repositoryClass=VideoRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
  */
 class Video
 {

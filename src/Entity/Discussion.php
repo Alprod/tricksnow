@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Monolog\DateTimeImmutable;
 
 /**
- * @ORM\Entity(repositoryClass=DiscussionRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\DiscussionRepository")
  */
 class Discussion
 {

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=FigureRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\FigureRepository")
  */
 class Figure
 {
@@ -107,7 +107,7 @@ class Figure
     {
         if (!$this->discussions->contains($discussion)) {
             $this->discussions[] = $discussion;
-            $discussion->setArticles($this);
+            $discussion->setFigures($this);
         }
 
         return $this;
@@ -117,8 +117,8 @@ class Figure
     {
         if ($this->discussions->removeElement($discussion)) {
             // set the owning side to null (unless already changed)
-            if ($discussion->getArticles() === $this) {
-                $discussion->setArticles(null);
+            if ($discussion->getFigures() === $this) {
+                $discussion->setFigures(null);
             }
         }
 

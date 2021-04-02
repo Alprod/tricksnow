@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\MessageRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Monolog\DateTimeImmutable;
 
 /**
- * @ORM\Entity(repositoryClass=MessageRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
  */
 class Message
 {

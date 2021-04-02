@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class FigureController extends AbstractController
 {
@@ -43,11 +44,12 @@ class FigureController extends AbstractController
     /**
      * @Route("/figure/new", name="new_figure")
      * @Route("/figure/{id}/edit", name="edit_figure")
+     * @ParamConverter("figure", class="SensioBlogBundle:Figure")
      * @param Request $request
-     * @param Figure|null $figure
+     * @param Figure $figure
      * @return Response
      */
-    public function form(Request $request, Figure $figure = null): Response
+    public function form(Request $request, Figure $figure): Response
     {
         if (!$figure){
             $figure = new Figure();
@@ -59,6 +61,7 @@ class FigureController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
 
             $figure->setAuthor($this->getUser());
+
             if (!$figure->getId()){
                 $figure->setUpdateAt(new \DateTime('now'));
             }

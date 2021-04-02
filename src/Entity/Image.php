@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageRepository;
+
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Monolog\DateTimeImmutable;
 
 /**
- * @ORM\Entity(repositoryClass=ImageRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
  */
 class Image
 {
